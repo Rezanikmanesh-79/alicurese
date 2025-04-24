@@ -25,3 +25,5 @@ black
 pytest
 pytest-django
 djoser
+djangorestframework_simplejwt
+social-auth-app-django
