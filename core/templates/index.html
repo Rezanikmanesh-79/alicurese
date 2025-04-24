@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Page Title</title>
+</head>
+<body>
+
+    <h1>This is a Heading</h1>
+    <p>This is {{ name }}.</p>
+    
+    <h2>Posts:</h2>
+    <ul>
+        {% for post in posts %}
+            <li>{{ post.title }}</li>
+        {% empty %}
+            <li>No posts available.</li>
+        {% endfor %}
+    </ul>
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Posts Detail</title>
+</head>
+<body>
+
+    <h1>{{object.title}}</h1>
+    <p>{{object.content}}</p>
+    <p>{{object.created_date}}</p>
+    <p>{{object.catgory}}</p>
+    <a href="{% url 'edit-post' pk=object.id %}">Edit</a>
+    <a href="{% url 'edit-delete' pk=object.id %}">Delete</a>
+
+</body>
+</html>

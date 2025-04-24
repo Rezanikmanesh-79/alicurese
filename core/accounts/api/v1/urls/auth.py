@@ -1,0 +1,51 @@
+from accounts.api.v1 import views
+from django.urls import path, include
+
+#  from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework_simplejwt.views import (
+    TokenRefreshView,
+    TokenVerifyView,
+)
+
+
+urlpatterns = [
+    # registration
+    path(
+        "registration/", views.RegistrationView.as_view(), name="registration"
+    ),
+    # change password
+    path(
+        "change-password/",
+        views.ChangePasswordView.as_view(),
+        name="change-password",
+    ),
+    # login token
+    path(
+        "api-token-auth/",
+        views.CustomAuthToken.as_view(),
+        name="obtain_auth_token",
+    ),
+    # log out
+    path(
+        "api-token-discord/",
+        views.CustoumDiscordeCustom.as_view(),
+        name="discord user token",
+    ),
+    # login jwt
+    path(
+        "api/token/",
+        views.CustomTokenObtainPairView.as_view(),
+        name="token_obtain_pair",
+    ),
+    path(
+        "api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"
+    ),
+    path("api/token/verify/", TokenVerifyView.as_view(), name="token_verify"),
+    path("email-sender/", views.TestEmailSend.as_view(), name="test-mail"),
+    # rest password
+    path(
+        "password-rest/",
+        views.PasswordRestView.as_view(),
+        name="password-rest",
+    ),
+]
