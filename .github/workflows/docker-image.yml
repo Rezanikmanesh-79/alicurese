@@ -20,7 +20,7 @@ jobs:
       run: docker compose up -d --build
 
     - name: Run tests inside container
-      run: docker compose exec -T backend pytest
+      run: docker compose exec -T backend bash -c "DJANGO_SETTINGS_MODULE=your_project.settings pytest"
 
     - name: Shut down containers
       run: docker compose down
