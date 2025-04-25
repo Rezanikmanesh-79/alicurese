@@ -20,6 +20,7 @@ urlpatterns = [
         views.PostDeleteView.as_view(),
         name="edit-delete",
     ),
+    path("Api-base-list/", TemplateView.as_view(template_name="api_base.html")),
     # path("about_fbv/", views.index_view, name="fbv-test"),
     # path('post/', views.api_post_view, name="post"),
     path("about_cbv/", views.IndexView.as_view(), name="index"),
