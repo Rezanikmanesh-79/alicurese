@@ -11,9 +11,10 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - SECRET_KEY='django-insecure-0ves$6-v9(%2)0ec8zlzk6_46lq*ra(u8ga*cxwlxn(5qwp$6b'
+      - SECRET_KEY=django-insecure-0ves$6-v9(%2)0ec8zlzk6_46lq*ra(u8ga*cxwlxn(5qwp$6b
       - DEBUG=True
-    command: python manage.py  runserver 0.0.0.0:8000
+    command: python manage.py runserver 0.0.0.0:8000
+
   smtp4dev:
     image: rnwood/smtp4dev:v3
     restart: always
@@ -21,13 +22,24 @@ services:
       - '5000:80'
       - '2525:25'
       - '1143:143'
-
     volumes:
-        - smtp4dev-data:/smtp4dev
+      - smtp4dev-data:/smtp4dev
     environment:
       - ServerOptions__HostName=smtp4dev
-
-
+  
+  master:
+    image: locustio/locust
+    ports:
+     - "8089:8089"
+    volumes:
+      - ./core/core/locust:/mnt/locust
+    command: -f /mnt/locust/locustfile.py --master -H http://master:8089
+  
+  worker:
+    image: locustio/locust
+    volumes:
+      - ./core/core/locust:/mnt/locust:/mnt/locust
+    command: -f /mnt/locust/locustfile.py --worker --master-host master
 
 volumes:
   smtp4dev-data:

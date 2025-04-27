@@ -28,3 +28,4 @@ djoser
 djangorestframework_simplejwt
 social-auth-app-django
 Faker
+django-cors-headers

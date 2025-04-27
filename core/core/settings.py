@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "rest_framework_simplejwt",
+    "corsheaders",
     "djoser",
     "django_filters",
     "mail_templated",
@@ -53,6 +54,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -201,3 +204,7 @@ EMAIL_PORT = 25
 EMAIL_USE_TLS = False
 EMAIL_HOST_USER = ""
 EMAIL_HOST_PASSWORD = ""
+
+# CORS_ALLOWED_ORIGINS = []
+CORS_ALLOW_ALL_ORIGINS = True
+
