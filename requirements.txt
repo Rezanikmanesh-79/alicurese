@@ -16,12 +16,6 @@ djangorestframework-simplejwt==5.3.1    # JWT authentication for DRF
 drf-yasg==1.21.7                         # Swagger/OpenAPI documentation generator
 Markdown==3.7                            # Markdown support (used by DRF browsable API)
 coreapi==2.3.3                           # Schema generation (used by DRF)
-
-# ==================== Email and SMTP Tools ====================
-django-mail-templated
-
-#============================clean code modulo==================
-black
 pytest
 pytest-django
 djoser
@@ -29,3 +23,12 @@ djangorestframework_simplejwt
 social-auth-app-django
 Faker
 django-cors-headers
+# ==================== Email and SMTP Tools ====================
+django-mail-templated
+
+#============================clean code modulo==================
+black
+
+# ==================== Background proccess and cache ====================
+celery
+redis

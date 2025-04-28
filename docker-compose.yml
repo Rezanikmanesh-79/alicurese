@@ -22,6 +22,21 @@ services:
       - SECRET_KEY=django-insecure-0ves$6-v9(%2)0ec8zlzk6_46lq*ra(u8ga*cxwlxn(5qwp$6b
       - DEBUG=True
     command: python manage.py runserver 0.0.0.0:8000
+  celery:
+    container_name: celery
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./core:/app
+    depends_on:
+      - redis
+      - backend
+    command: celery -A core worker --loglevel=info  
+    environment:
+      - SECRET_KEY=django-insecure-0ves$6-v9(%2)0ec8zlzk6_46lq*ra(u8ga*cxwlxn(5qwp$6b
+      - DEBUG=True
+
 
   smtp4dev:
     image: rnwood/smtp4dev:v3
