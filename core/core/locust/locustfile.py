@@ -1,5 +1,6 @@
 from locust import HttpUser, task
 
+
 class HelloWorldUser(HttpUser):
     def on_start(self):
         response = self.client.post("/accounts/api/v2/jwt/create/", json={
