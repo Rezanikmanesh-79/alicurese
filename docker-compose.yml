@@ -8,7 +8,6 @@ services:
       - "6379:6379"
     command: redis-server --save 60 1 --loglevel warning
 
-
   backend:
     container_name: back
     build:
@@ -22,6 +21,7 @@ services:
       - SECRET_KEY=django-insecure-0ves$6-v9(%2)0ec8zlzk6_46lq*ra(u8ga*cxwlxn(5qwp$6b
       - DEBUG=True
     command: python manage.py runserver 0.0.0.0:8000
+
   celery:
     container_name: celery
     build:
@@ -37,6 +37,20 @@ services:
       - SECRET_KEY=django-insecure-0ves$6-v9(%2)0ec8zlzk6_46lq*ra(u8ga*cxwlxn(5qwp$6b
       - DEBUG=True
 
+  celery_worker2:
+    container_name: celery_worker2
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./core:/app
+    depends_on:
+      - redis
+      - backend
+    command: celery -A core worker --loglevel=info
+    environment:
+      - SECRET_KEY=django-insecure-0ves$6-v9(%2)0ec8zlzk6_46lq*ra(u8ga*cxwlxn(5qwp$6b
+      - DEBUG=True
 
   smtp4dev:
     image: rnwood/smtp4dev:v3
@@ -61,7 +75,7 @@ services:
   worker:
     image: locustio/locust
     volumes:
-      - ./core/core/locust:/mnt/locust:/mnt/locust
+      - ./core/core/locust:/mnt/locust
     command: -f /mnt/locust/locustfile.py --worker --master-host master
 
 volumes:
