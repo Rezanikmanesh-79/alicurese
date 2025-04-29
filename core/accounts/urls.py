@@ -1,5 +1,5 @@
 from django.urls import path, include
-
+from accounts.views import send_email
 app_name = "accounts"
 
 urlpatterns = [
@@ -8,5 +8,6 @@ urlpatterns = [
     # make life lot EZer
     path("api/v2/", include("djoser.urls")),
     path("api/v2/", include("djoser.urls.jwt")),
-
+    path("send_email/", send_email)
+    
 ]
