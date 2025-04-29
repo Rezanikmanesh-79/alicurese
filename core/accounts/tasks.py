@@ -6,3 +6,4 @@ from time import sleep
 def sendEmail():
     sleep(3)
     print('done sending email')
+    return "Done"

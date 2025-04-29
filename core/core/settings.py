@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from decouple import config
 from pathlib import Path
+from celery.schedules import crontab
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -208,4 +209,12 @@ EMAIL_HOST_PASSWORD = ""
 # CORS_ALLOWED_ORIGINS = []
 CORS_ALLOW_ALL_ORIGINS = True
 
+CELERY_BEAT_SCHEDULE = {
+    'send-email-every-10-seconds': {
+        'task': 'accounts.tasks.sendEmail',
+        'schedule': 10.0,
+    },
+}
+
 CELERY_BROKER_URL = 'redis://redis:6379/1'
+CELERY_RESULT_BACKEND = 'redis://redis:6379/1'

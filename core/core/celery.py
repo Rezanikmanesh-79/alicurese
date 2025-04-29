@@ -18,3 +18,4 @@ app.autodiscover_tasks()
 
 def setup_periodic_tasks(sender: Celery, **kwargs):
     sender.add_periodic_task(10.0, sendEmail.s(), name='send email every 10')
+
