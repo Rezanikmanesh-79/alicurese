@@ -1,0 +1,69 @@
+version: "3.9"
+
+services:
+  redis:
+    container_name: redis
+    image: redis
+    ports:
+      - "6379:6379"
+    command: redis-server --save 60 1 --loglevel warning
+
+  backend:
+    container_name: back
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./core:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - SECRET_KEY=django-insecure-0ves$6-v9(%2)0ec8zlzk6_46lq*ra(u8ga*cxwlxn(5qwp$6b
+      - DEBUG=False
+    command:  gunicorn core.wsgi --bind 0.0.0.0:8000
+    #   python manage.py makemigrations && python manage.py migrate && python manage.py collectstatic --noinput &&
+  celery-beat:
+    container_name: celery-beat
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./core:/app
+    depends_on:
+      - redis
+      - backend
+      - celery
+    command: celery -A core beat --loglevel=info
+    environment:
+      - SECRET_KEY=django-insecure-0ves$6-v9(%2)0ec8zlzk6_46lq*ra(u8ga*cxwlxn(5qwp$6b
+      - DEBUG=True
+
+  celery:
+    container_name: celery
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./core:/app
+    depends_on:
+      - redis
+      - backend
+    command: celery -A core worker --loglevel=info  
+    environment:
+      - SECRET_KEY=django-insecure-0ves$6-v9(%2)0ec8zlzk6_46lq*ra(u8ga*cxwlxn(5qwp$6b
+      - DEBUG=True
+
+  celery_worker2:
+    container_name: celery_worker2
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./core:/app
+    depends_on:
+      - redis
+      - backend
+    command: celery -A core worker --loglevel=info
+    environment:
+      - SECRET_KEY=django-insecure-0ves$6-v9(%2)0ec8zlzk6_46lq*ra(u8ga*cxwlxn(5qwp$6b
+      - DEBUG=True

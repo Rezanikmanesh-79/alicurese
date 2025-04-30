@@ -7,7 +7,7 @@ pillow==11.1.0                 # Image processing (used with ImageField in Djang
 # ==================== Django and Server Tools ====================
 asgiref==3.8.1                 # ASGI interface for Django
 sqlparse==0.5.3               # SQL formatting (used internally by Django)
-gunicorn==23.0.0              # WSGI HTTP server for production
+gunicorn                     # WSGI HTTP server for production
 psycopg2-binary==2.9.10       # PostgreSQL database adapter
 
 # ==================== Django Extensions and REST Enhancements ====================
