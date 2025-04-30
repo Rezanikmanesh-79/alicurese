@@ -1,3 +1,4 @@
+
 version: "3.9"
 
 services:
@@ -67,3 +68,19 @@ services:
     environment:
       - SECRET_KEY=django-insecure-0ves$6-v9(%2)0ec8zlzk6_46lq*ra(u8ga*cxwlxn(5qwp$6b
       - DEBUG=True
+
+  nginx:
+
+    image: nginx
+
+    container_name: nginx
+
+    restart: always
+
+    ports: 
+
+      - "80:80"
+
+    volumes:
+
+      - ./default.conf:/etc/nginx/conf.d/default.conf
