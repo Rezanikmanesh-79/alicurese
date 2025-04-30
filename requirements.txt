@@ -32,3 +32,4 @@ black
 # ==================== Background proccess and cache ====================
 celery
 redis
+django-redis

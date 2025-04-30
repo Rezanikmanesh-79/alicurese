@@ -218,3 +218,13 @@ CELERY_BEAT_SCHEDULE = {
 
 CELERY_BROKER_URL = 'redis://redis:6379/1'
 CELERY_RESULT_BACKEND = 'redis://redis:6379/1'
+# caching
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://redis:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
