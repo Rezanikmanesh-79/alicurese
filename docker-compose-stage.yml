@@ -16,6 +16,8 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./core:/app
+      - static_volume:/app/static
+      - media_volume:/app/media
     ports:
       - "8000:8000"
     environment:
@@ -23,6 +25,8 @@ services:
       - DEBUG=False
     command:  gunicorn core.wsgi --bind 0.0.0.0:8000
     #   python manage.py makemigrations && python manage.py migrate && python manage.py collectstatic --noinput &&
+
+  
   celery-beat:
     container_name: celery-beat
     build:
@@ -84,3 +88,10 @@ services:
     volumes:
 
       - ./default.conf:/etc/nginx/conf.d/default.conf
+      - static_volume:/home/app/static
+      - media_volume:/home/app/media
+
+volumes:
+  static_volume:
+  media_volume:
+
