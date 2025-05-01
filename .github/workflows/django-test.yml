@@ -21,11 +21,14 @@ jobs:
 
       - name: Install dependencies
         run: |
+          cd core
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
       - name: Run Django tests
-        run: python manage.py test
+        run: |
+          cd core
+          python manage.py test
 
   deploy:
     needs: build
@@ -38,11 +41,12 @@ jobs:
           host: ${{ secrets.HOST }}
           port: ${{ secrets.PORT }}
           username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
+          password: ${{ secrets.PASSWORD }} # یا از key استفاده کن اگر کلید خصوصی استفاده می‌کنی
           script: |
             cd /home/alicurese
             git pull origin main
-            docker-compose down
-            docker-compose up -d --build
-            docker-compose exec web python manage.py migrate
-            docker-compose exec web python manage.py collectstatic --noinput
+            docker-compose -f docker-compose-stage.yml down
+            docker-compose -f docker-compose-stage.yml up -d --build
+            docker-compose -f docker-compose-stage.yml exec web python manage.py makemigrations
+            docker-compose -f docker-compose-stage.yml exec web python manage.py migrate
+            docker-compose -f docker-compose-stage.yml exec web python manage.py collectstatic --noinput
