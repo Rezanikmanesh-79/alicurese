@@ -23,7 +23,9 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
-          PORT: ${{ secrets.PORT }}
+          port: ${{ secrets.PORT }}
           username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.password }}
-          script: ls
+          password: ${{ secrets.PASSWORD }}
+          script: |
+            echo "Connected successfully"
+            ls
