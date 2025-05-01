@@ -1,4 +1,4 @@
-name: django project test
+name: django project test and deploy 
 
 on:
   push:
@@ -23,6 +23,7 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
+          PORT: ${{ secrets.PORT }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.password }}
           script: ls
